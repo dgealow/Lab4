@@ -7,20 +7,48 @@
  * 4. Add comments and Javadoc comments where needed
  * 5. Remove unnecessary comments as appropriate
  */
+/**
+ * Contains a substring finder.
+ */
+public class ReclamationProject {
+    /**
+     * Finds the longest substring shared by two strings.
+     * @param a first input string
+     * @param b second input string
+     * @return longest shared substring of a and b or "" if there is none
+     */
+    static String sharedSubstring(final String a, final String b) {
+        String longer, shorter;
+        if (a.length() > b.length()) {
+            longer = a;
+            shorter = b;
+        } else {
+            longer = b;
+            shorter = a;
+        }
 
-public class ReclamationProject
-{
-    static String doit(String a,String b){
-        if (a.length() > b.length()){
-            String c = a; // TODO: set c to a
-            a=b; b=c;}
-        String r = (a.equals(b)) ? "" : ""; // I love the ternary operator!
-        /*
-         * For loop with i
-         */
-        for (int i = 0; i < a.length(); i++) { for (int j = a.length() - i; j > 0; j--) {
-                for (int k = 0; k < b.length()- j; k++) {
-                    r = (a.regionMatches(i, b, k, j) && j >r.length()) ? a.substring(i,i + j) : r; // Do it!
-                        }} // Ah yeah
-        } return r; }
+        String retString = "";
+        if (longer.equals(shorter)) {
+            retString = a;
+        }
+
+        for (int lIndex = 0; lIndex < longer.length(); lIndex++) {
+            for (int length = longer.length() - lIndex; length > retString.length(); length--) {
+                for (int sIndex = 0; sIndex <= shorter.length() - length; sIndex++) {
+                    if (longer.regionMatches(lIndex, shorter, sIndex, length)) {
+                        retString = longer.substring(lIndex, lIndex + length);
+                    }
+                }
+            }
+        }
+        return retString;
+    }
+
+    /**
+     * Tests the sharedSubstring method.
+     * @param args unused
+     */
+    public static void main(final String[] args) {
+        System.out.println(sharedSubstring("The quick brown fox", "jumps over the lazy dog."));
+    }
 }
